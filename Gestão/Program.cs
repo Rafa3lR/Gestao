@@ -1,4 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using System.IO;
+using System;
 
 internal class Program
 {
@@ -6,11 +8,74 @@ internal class Program
     private static void Main(string[] args)
     {
         int quantVenda = 0, escMenuPrincipal = 10, posic = 0, escVenda = 1000001, escMenuCadastro = 5, escCadastro;
-        string confirmacao, relatorio = "", relatorioFinal = "", pause;
+        string confirmacao, relatorio = "", relatorioFinal = "", pause, encerrado;
         float totalGeral = 0;
         int[] quantEstoque = new int[1000001], quantEstoqueVenda = new int[1000001];
         float[] preco = new float[1000001], precoVenda = new float[1000001];
         string[] nomeProdutos = new string[1000001], nomeProdutosVenda = new string[1000001];
+        
+        //Adicionar caminho dos arquivos de texto
+        string desctxt = @"";
+        string precotxt = @"";
+        string quanttxt = @"";
+        string relatoriostxt = @"";
+        string relatorioBackuptxt = @"";
+        string encerradotxt = @"";
+        string totalGeraltxt = @"";
+        
+        
+        using (StreamReader sr = new StreamReader(desctxt))
+        {
+            string descricao;
+            while ((descricao = sr.ReadLine()) != null)
+            {
+                nomeProdutos[posic] = descricao;
+                posic++;
+            }
+        }
+        using (StreamReader sr = new StreamReader(precotxt))
+        {
+            posic = 0;
+            string precos;
+            while ((precos = sr.ReadLine()) != null)
+            {
+                preco[posic] = Convert.ToInt32(precos);
+                posic++;
+            }
+        }
+        using (StreamReader sr = new StreamReader (quanttxt))
+        {
+            posic = 0;
+            string quant;
+            while ((quant = sr.ReadLine()) != null)
+            {
+                quantEstoque[posic] = Convert.ToInt32(quant);
+                posic++;
+            }
+        }
+        using (StreamReader sr = new StreamReader(encerradotxt))
+        {
+           encerrado = sr.ReadLine();
+        }
+        if (encerrado == "0")
+        {
+            using (StreamReader sr = new StreamReader(relatorioBackuptxt))
+            {
+                string relatorios1;
+                while ((relatorios1 = sr.ReadLine()) != null)
+                {
+                    relatorioFinal += relatorios1 + "\n";
+                }
+            }
+            using (StreamReader sr = new StreamReader(totalGeraltxt))
+            {
+                totalGeral = Convert.ToSingle(sr.ReadLine());
+            }
+        }
+        using (StreamWriter sw = new StreamWriter(encerradotxt))
+        {
+            sw.Write("0");
+        }
 
         while (escMenuPrincipal != 4)
         {   
@@ -172,9 +237,52 @@ internal class Program
                         quantEstoqueVenda[i] = 0;
                         precoVenda[i] = 0;
                     }
+
+                    using (StreamWriter sw = new StreamWriter(desctxt))
+                    {
+                        sw.Write("");
+                    }
+                    using (StreamWriter sw = new StreamWriter(precotxt))
+                    {
+                        sw.Write("");
+                    }
+                    using (StreamWriter sw = new StreamWriter(quanttxt))
+                    {
+                        sw.Write("");
+                    }
+
+                    for (int i = 0; i < 1000000; i++)
+                    {
+                        if (quantEstoque[i] > 0)
+                        {
+                            using (StreamWriter sw = File.AppendText(desctxt))
+                            {
+                                sw.WriteLine(nomeProdutos[i]);
+                            }
+                            using (StreamWriter sw = File.AppendText(precotxt))
+                            {
+                                sw.WriteLine(preco[i]);
+                            }
+                            using (StreamWriter sw = File.AppendText(quanttxt))
+                            {
+                                sw.WriteLine(quantEstoque[i]);
+                            }
+                        }
+                    }
+
                     if (quantVenda > 0)
                     {
                         relatorioFinal += relatorio;
+
+                        using (StreamWriter sw = new StreamWriter(relatorioBackuptxt))
+                        {
+                            sw.Write(relatorioFinal);
+                        }
+                        using (StreamWriter sw = new StreamWriter(totalGeraltxt))
+                        {
+                            sw.Write(totalGeral);
+                        }
+
                     }
                 }
 
@@ -223,6 +331,20 @@ internal class Program
                                     quantEstoque[posic] = Convert.ToInt32(Console.ReadLine());
                                 }
                                 catch { }
+
+                                using (StreamWriter sw = File.AppendText(desctxt))
+                                {
+                                    sw.WriteLine(nomeProdutos[posic]);
+                                }
+                                using (StreamWriter sw = File.AppendText(precotxt))
+                                {
+                                    sw.WriteLine(preco[posic]);
+                                }
+                                using (StreamWriter sw = File.AppendText(quanttxt))
+                                {
+                                    sw.WriteLine(quantEstoque[posic]);
+                                }
+
                                 posic++;
                             }
                             else if (posic > 999999)
@@ -243,6 +365,37 @@ internal class Program
                             }
                             catch { }
 
+                            using (StreamWriter sw = new StreamWriter(desctxt))
+                            {
+                                sw.Write("");
+                            }
+                            using (StreamWriter sw = new StreamWriter(precotxt))
+                            {
+                                sw.Write("");
+                            }
+                            using (StreamWriter sw = new StreamWriter(quanttxt))
+                            {
+                                sw.Write("");
+                            }
+
+                            for (int i = 0; i < 1000000; i++)
+                            {
+                                if (quantEstoque[i] > 0)
+                                {
+                                    using (StreamWriter sw = File.AppendText(desctxt))
+                                    {
+                                        sw.WriteLine(nomeProdutos[i]);
+                                    }
+                                    using (StreamWriter sw = File.AppendText(precotxt))
+                                    {
+                                        sw.WriteLine(preco[i]);
+                                    }
+                                    using (StreamWriter sw = File.AppendText(quanttxt))
+                                    {
+                                        sw.WriteLine(quantEstoque[i]);
+                                    }
+                                }
+                            }
                         }
                         else if (escMenuCadastro == 3)
                         {
@@ -262,6 +415,38 @@ internal class Program
                                             quantEstoque[escCadastro] += quantLocal;
                                         }
                                         catch { }
+
+                                        using (StreamWriter sw = new StreamWriter(desctxt))
+                                        {
+                                            sw.Write("");
+                                        }
+                                        using (StreamWriter sw = new StreamWriter(precotxt))
+                                        {
+                                            sw.Write("");
+                                        }
+                                        using (StreamWriter sw = new StreamWriter(quanttxt))
+                                        {
+                                            sw.Write("");
+                                        }
+
+                                        for (int i = 0; i < 1000000; i++)
+                                        {
+                                            if (quantEstoque[i] > 0)
+                                            {
+                                                using (StreamWriter sw = File.AppendText(desctxt))
+                                                {
+                                                    sw.WriteLine(nomeProdutos[i]);
+                                                }
+                                                using (StreamWriter sw = File.AppendText(precotxt))
+                                                {
+                                                    sw.WriteLine(preco[i]);
+                                                }
+                                                using (StreamWriter sw = File.AppendText(quanttxt))
+                                                {
+                                                    sw.WriteLine(quantEstoque[i]);
+                                                }
+                                            }
+                                        }
                                     }
                                     else if (preco[escCadastro] <= 0)
                                     {
@@ -294,6 +479,38 @@ internal class Program
                                     }
                                 }
                                 catch { }
+
+                                using (StreamWriter sw = new StreamWriter(desctxt))
+                                {
+                                    sw.Write("");
+                                }
+                                using (StreamWriter sw = new StreamWriter(precotxt))
+                                {
+                                    sw.Write("");
+                                }
+                                using (StreamWriter sw = new StreamWriter(quanttxt))
+                                {
+                                    sw.Write("");
+                                }
+
+                                for (int i = 0; i < 1000000; i++)
+                                {
+                                    if (quantEstoque[i] > 0)
+                                    {
+                                        using (StreamWriter sw = File.AppendText(desctxt))
+                                        {
+                                            sw.WriteLine(nomeProdutos[i]);
+                                        }
+                                        using (StreamWriter sw = File.AppendText(precotxt))
+                                        {
+                                            sw.WriteLine(preco[i]);
+                                        }
+                                        using (StreamWriter sw = File.AppendText(quanttxt))
+                                        {
+                                            sw.WriteLine(quantEstoque[i]);
+                                        }
+                                    }
+                                }
                             }
                             else
                             {
@@ -314,7 +531,7 @@ internal class Program
                     Console.WriteLine("(Cod  -  Descrição  -  Preço  -  Quantidade)\n");
                     Console.WriteLine("==============================================\n");
                     Console.WriteLine(relatorioFinal);
-                    Console.WriteLine("\n\n==============================================");
+                    Console.WriteLine("\n==============================================");
                     Console.WriteLine("\nTotal: " + totalGeral);
                     Console.WriteLine("\n\nEnter para voltar");
                     pause = Console.ReadLine();
@@ -329,8 +546,32 @@ internal class Program
         Console.WriteLine("(Cod  -  Descrição  -  Preço  -  Quantidade)\n");
         Console.WriteLine("==============================================\n");
         Console.WriteLine(relatorioFinal);
-        Console.WriteLine("\n\n==============================================");
+        Console.WriteLine("\n==============================================");
         Console.WriteLine("\nTotal: " + totalGeral);
+        
+        using (StreamWriter sw = File.AppendText(relatoriostxt))
+        {
+            sw.WriteLine("");
+            sw.WriteLine(DateTime.Now.ToString());
+            sw.WriteLine("RELATORIO DE VENDAS \n\n");
+            sw.WriteLine("(Cod  -  Descrição  -  Preço  -  Quantidade)\n");
+            sw.WriteLine("==============================================\n");
+            sw.WriteLine(relatorioFinal);
+            sw.WriteLine("\n==============================================");
+            sw.WriteLine("\nTotal: " + totalGeral);
+        }
+        using (StreamWriter sw = new StreamWriter(encerradotxt))
+        {
+            sw.Write("1");
+        }
+        using (StreamWriter sw = new StreamWriter(relatorioBackuptxt))
+        {
+            sw.Write("");
+        }
+        using (StreamWriter sw = new StreamWriter(totalGeraltxt))
+        {
+            sw.Write("0");
+        }
         pause = Console.ReadLine();
     }
 }
