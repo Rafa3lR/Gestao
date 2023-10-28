@@ -13,7 +13,7 @@ internal class Program
         int[] quantEstoque = new int[1000001], quantEstoqueVenda = new int[1000001];
         float[] preco = new float[1000001], precoVenda = new float[1000001];
         string[] nomeProdutos = new string[1000001], nomeProdutosVenda = new string[1000001];
-        
+
         //Adicionar caminho dos arquivos de texto
         string desctxt = @"";
         string precotxt = @"";
@@ -22,8 +22,8 @@ internal class Program
         string relatorioBackuptxt = @"";
         string encerradotxt = @"";
         string totalGeraltxt = @"";
-        
-        
+
+
         using (StreamReader sr = new StreamReader(desctxt))
         {
             string descricao;
@@ -304,8 +304,8 @@ internal class Program
                             }
                         }
                         Console.WriteLine("\n\n==============================================");
-                        Console.WriteLine("\n\n|  1. Cadastrar produto  |  2. Reajuste de preço  |");
-                        Console.WriteLine("\n|  3. Adicionar saldo    |  4. Excluir produto    |  0. Menu inicial  |\n");
+                        Console.WriteLine("\n\n|  1. Cadastrar produto  |  2. Reajuste de preço  |  3. Devolução     |");
+                        Console.WriteLine(  "\n|  4. Adicionar saldo    |  5. Excluir produto    |  0. Menu inicial  |\n");
                         Console.WriteLine("\nCódigo: ");
                         try
                         {
@@ -399,6 +399,66 @@ internal class Program
                         }
                         else if (escMenuCadastro == 3)
                         {
+                            int quantDevo = 0;
+                            escCadastro = 1000001;
+                            Console.WriteLine("Digite o cod do Produto: ");
+                            try
+                            {
+                                escCadastro = Convert.ToInt32(Console.ReadLine());                           
+                            }
+                            catch { }
+                            Console.WriteLine("Digite a quantidade: ");
+                            try
+                            {
+                                quantDevo = Convert.ToInt32(Console.ReadLine());
+                            }
+                            catch { }
+                            relatorioFinal += "\n" + escCadastro + "  -  " + nomeProdutos[escCadastro] + "  -  " + ((preco[escCadastro] * quantDevo) * -1) + "  -  " + quantDevo;
+                            totalGeral -= preco[escCadastro] * quantDevo;
+                            quantEstoque[escCadastro] += quantDevo;
+
+                            using (StreamWriter sw = new StreamWriter(desctxt))
+                            {
+                                sw.Write("");
+                            }
+                            using (StreamWriter sw = new StreamWriter(precotxt))
+                            {
+                                sw.Write("");
+                            }
+                            using (StreamWriter sw = new StreamWriter(quanttxt))
+                            {
+                                sw.Write("");
+                            }
+
+                            for (int i = 0; i < 1000000; i++)
+                            {
+                                if (quantEstoque[i] > 0)
+                                {
+                                    using (StreamWriter sw = File.AppendText(desctxt))
+                                    {
+                                        sw.WriteLine(nomeProdutos[i]);
+                                    }
+                                    using (StreamWriter sw = File.AppendText(precotxt))
+                                    {
+                                        sw.WriteLine(preco[i]);
+                                    }
+                                    using (StreamWriter sw = File.AppendText(quanttxt))
+                                    {
+                                        sw.WriteLine(quantEstoque[i]);
+                                    }
+                                }
+                            }
+                            using (StreamWriter sw = new StreamWriter(relatorioBackuptxt))
+                            {
+                                sw.Write(relatorioFinal);
+                            }
+                            using (StreamWriter sw = new StreamWriter(totalGeraltxt))
+                            {
+                                sw.Write(totalGeral);
+                            }
+                        }
+                        else if (escMenuCadastro == 4)
+                        {
                             int quantLocal = 0;
                             Console.WriteLine("Digite o cod do produto: ");
                             try
@@ -459,7 +519,7 @@ internal class Program
                             }
                             catch { }
                         }
-                        else if (escMenuCadastro == 4)
+                        else if (escMenuCadastro == 5)
                         {
                             if (posic > 0 || escMenuCadastro == 4)
                             {
