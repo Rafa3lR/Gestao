@@ -82,9 +82,9 @@ internal class Program
             Console.Clear();
             Console.WriteLine("Bem vindo!");
             Console.WriteLine("\nEscolha uma das opções:");
-            Console.WriteLine("\n|  1. Venda      |  2. Estoque   |");
-            Console.WriteLine("\n|  3. Relatório  |  4. Encerrar  |");
-            Console.WriteLine("\nCódigo: ");
+            Console.WriteLine("|  1. Venda      |  2. Estoque   |");
+            Console.WriteLine("|  3. Relatório  |  4. Encerrar  |");
+            Console.WriteLine("Código: ");
             try
             {
                 escMenuPrincipal = Convert.ToInt32(Console.ReadLine());
@@ -110,8 +110,8 @@ internal class Program
                         }
                         Console.WriteLine("\nTotal: " + totalLocal);
                         Console.WriteLine("\n|  -1. Consultar tabela de produtos  |  -2. Encerrar pedido  |");
-                        Console.WriteLine("\n|  -3. Cancelar produto              |  Código do produto    |");
-                        Console.WriteLine("\nCod: ");
+                        Console.WriteLine("|  -3. Cancelar produto              |  Código do produto    |");
+                        Console.WriteLine("Cod: ");
                         try
                         {
                             escVenda = Convert.ToInt32(Console.ReadLine());
@@ -123,7 +123,7 @@ internal class Program
                             if (preco[escVenda] > 0.00)
                             {
                                 Console.WriteLine("\n" + nomeProdutos[escVenda] + " - " + preco[escVenda]);
-                                Console.WriteLine("\n\nConfirmar (s/n): ");
+                                Console.WriteLine("Confirmar (s/n): ");
                                 confirmacao = Console.ReadLine();
 
                                 if (confirmacao == "s")
@@ -156,7 +156,7 @@ internal class Program
                                     else
                                     {
                                         Console.Clear();
-                                        Console.WriteLine("Saldo insuficiente\n\n");
+                                        Console.WriteLine("Saldo insuficiente");
                                     }
                                 }
                                 else
@@ -167,7 +167,7 @@ internal class Program
                             else
                             {
                                 Console.WriteLine("\nProduto não existe");
-                                Console.WriteLine("\n\nEnter para continuar");
+                                Console.WriteLine("Enter para continuar");
                                 pause = Console.ReadLine();
                                 Console.Clear();
                             }
@@ -176,7 +176,7 @@ internal class Program
                         {
                             Console.Clear();
                             Console.WriteLine("(Cod  -  Descrição  -  Preço  -  Quantidade)\n");
-                            Console.WriteLine("==============================================\n");
+                            Console.Write("==============================================");
                             for (int i = 0; i < 1000000; i++)
                             {
                                 if (quantEstoque[i] > 0)
@@ -184,8 +184,8 @@ internal class Program
                                     Console.WriteLine("\n" + i + "  -  " + nomeProdutos[i] + "  -  " + preco[i] + "  -  " + quantEstoque[i]);
                                 }
                             }
-                            Console.WriteLine("\n\n==============================================");
-                            Console.WriteLine("\n\nEnter para continuar");
+                            Console.WriteLine("==============================================");
+                            Console.WriteLine("\nEnter para continuar");
                             pause = Console.ReadLine();
                             Console.Clear();
                         }
@@ -214,7 +214,7 @@ internal class Program
                             else
                             {
                                 Console.WriteLine("\nProduto não existe");
-                                Console.WriteLine("\n\nEnter para continuar");
+                                Console.WriteLine("Enter para continuar");
                                 pause = Console.ReadLine();
                                 Console.Clear();
                             }
@@ -222,7 +222,7 @@ internal class Program
                         else
                         {
                             Console.WriteLine("\nProduto não existe");
-                            Console.WriteLine("\n\nEnter para continuar");
+                            Console.WriteLine("Enter para continuar");
                             pause = Console.ReadLine();
                             Console.Clear();
                         }
@@ -295,7 +295,7 @@ internal class Program
                         Console.Clear();
                         Console.WriteLine("ESTOQUE\n");
                         Console.WriteLine("(Cod  -  Descrição  -  Preço  -  Quantidade)\n");
-                        Console.WriteLine("==============================================\n");
+                        Console.Write("==============================================");
                         for (int i = 0; i < 1000000; i++)
                         {
                             if (quantEstoque[i] > 0)
@@ -303,10 +303,10 @@ internal class Program
                                 Console.WriteLine("\n" + i + "  -  " + nomeProdutos[i] + "  -  " + preco[i] + "  -  " + quantEstoque[i]);
                             }
                         }
-                        Console.WriteLine("\n\n==============================================");
-                        Console.WriteLine("\n\n|  1. Cadastrar produto  |  2. Reajuste de preço  |  3. Devolução     |");
-                        Console.WriteLine(  "\n|  4. Adicionar saldo    |  5. Excluir produto    |  0. Menu inicial  |\n");
-                        Console.WriteLine("\nCódigo: ");
+                        Console.WriteLine("==============================================");
+                        Console.WriteLine("\n|  1. Cadastrar produto  |  2. Reajuste de preço  |  3. Devolução     |");
+                        Console.WriteLine(  "|  4. Adicionar saldo    |  5. Excluir produto    |  0. Menu inicial  |");
+                        Console.WriteLine("Código: ");
                         try
                         {
                             escMenuCadastro = Convert.ToInt32(Console.ReadLine());
@@ -350,7 +350,7 @@ internal class Program
                             else if (posic > 999999)
                             {
                                 Console.WriteLine("\nLimite alcançado");
-                                Console.WriteLine("\n\nEnter para voltar");
+                                Console.WriteLine("Enter para voltar");
                                 pause = Console.ReadLine();
                             }
                         }
@@ -511,7 +511,7 @@ internal class Program
                                     else if (preco[escCadastro] <= 0)
                                     {
                                         Console.WriteLine("\nProduto não existe");
-                                        Console.WriteLine("\n\nEnter para continuar");
+                                        Console.WriteLine("Enter para continuar");
                                         pause = Console.ReadLine();
                                         Console.Clear();
                                     }
@@ -575,7 +575,7 @@ internal class Program
                             else
                             {
                                 Console.WriteLine("\nNão existe produto para ser excluído");
-                                Console.WriteLine("\n\nEnter para continuar");
+                                Console.WriteLine("Enter para continuar");
                                 pause = Console.ReadLine();
                                 Console.Clear();
                             }
@@ -587,13 +587,13 @@ internal class Program
                 if (escMenuPrincipal == 3)
                 {
                     Console.Clear();
-                    Console.WriteLine("RELATORIO DE VENDAS \n\n");
+                    Console.WriteLine("RELATORIO DE VENDAS \n");
                     Console.WriteLine("(Cod  -  Descrição  -  Preço  -  Quantidade)\n");
-                    Console.WriteLine("==============================================\n");
+                    Console.Write("==============================================");
                     Console.WriteLine(relatorioFinal);
-                    Console.WriteLine("\n==============================================");
-                    Console.WriteLine("\nTotal: " + totalGeral);
-                    Console.WriteLine("\n\nEnter para voltar");
+                    Console.WriteLine("==============================================");
+                    Console.WriteLine("Total: " + totalGeral);
+                    Console.WriteLine("\nEnter para voltar");
                     pause = Console.ReadLine();
                 }
             }
@@ -602,23 +602,23 @@ internal class Program
 
         //Fim do programa
         Console.Clear();
-        Console.WriteLine("RELATORIO DE VENDAS \n\n");
+        Console.WriteLine("RELATORIO DE VENDAS \n");
         Console.WriteLine("(Cod  -  Descrição  -  Preço  -  Quantidade)\n");
-        Console.WriteLine("==============================================\n");
+        Console.Write("==============================================");
         Console.WriteLine(relatorioFinal);
-        Console.WriteLine("\n==============================================");
-        Console.WriteLine("\nTotal: " + totalGeral);
+        Console.WriteLine("==============================================");
+        Console.WriteLine("Total: " + totalGeral);
         
         using (StreamWriter sw = File.AppendText(relatoriostxt))
         {
             sw.WriteLine("");
             sw.WriteLine(DateTime.Now.ToString());
-            sw.WriteLine("RELATORIO DE VENDAS \n\n");
+            sw.WriteLine("RELATORIO DE VENDAS \n");
             sw.WriteLine("(Cod  -  Descrição  -  Preço  -  Quantidade)\n");
-            sw.WriteLine("==============================================\n");
+            sw.Write("==============================================");
             sw.WriteLine(relatorioFinal);
-            sw.WriteLine("\n==============================================");
-            sw.WriteLine("\nTotal: " + totalGeral);
+            sw.WriteLine("==============================================");
+            sw.WriteLine("Total: " + totalGeral);
         }
         using (StreamWriter sw = new StreamWriter(encerradotxt))
         {
